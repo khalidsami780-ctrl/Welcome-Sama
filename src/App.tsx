@@ -10,6 +10,7 @@ import { SceneGarden } from './components/SceneGarden';
 import { SceneLetter } from './components/SceneLetter';
 import { SceneSurprise } from './components/SceneSurprise';
 import { MusicCorner } from './components/MusicCorner';
+import { ParticleHeartModal } from './components/ParticleHeartModal';
 import { soundscape } from './utils/audio';
 
 export function App() {
@@ -17,6 +18,7 @@ export function App() {
   const [language, setLanguage] = useState<Language>('en');
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [showMusicCorner, setShowMusicCorner] = useState(false);
+  const [showParticleHeart, setShowParticleHeart] = useState(false);
   const petalBurstFnRef = useRef<(() => void) | null>(null);
 
   // Keyboard navigation & Shortcuts
@@ -36,6 +38,8 @@ export function App() {
         setLanguage((prev) => (prev === 'en' ? 'ar' : 'en'));
       } else if (e.key.toLowerCase() === 'u') {
         setShowMusicCorner((prev) => !prev);
+      } else if (e.key.toLowerCase() === 'h') {
+        setShowParticleHeart((prev) => !prev);
       }
     };
 
@@ -81,6 +85,7 @@ export function App() {
         soundEnabled={soundEnabled}
         onToggleSound={handleToggleSound}
         onOpenMusicCorner={() => setShowMusicCorner(true)}
+        onOpenParticleHeart={() => setShowParticleHeart(true)}
       />
 
       {/* Main Experience Stage with Transition Animations */}
@@ -128,6 +133,14 @@ export function App() {
         <MusicCorner
           language={language}
           onClose={() => setShowMusicCorner(false)}
+        />
+      )}
+
+      {/* Interactive Nested Particle Heart Experience (Lazy Loaded, Unmounted when closed) */}
+      {showParticleHeart && (
+        <ParticleHeartModal
+          language={language}
+          onClose={() => setShowParticleHeart(false)}
         />
       )}
 

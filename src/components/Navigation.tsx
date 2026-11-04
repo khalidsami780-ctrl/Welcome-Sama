@@ -11,6 +11,7 @@ interface NavigationProps {
   soundEnabled: boolean;
   onToggleSound: () => void;
   onOpenMusicCorner: () => void;
+  onOpenParticleHeart: () => void;
 }
 
 export const Navigation: React.FC<NavigationProps> = ({
@@ -21,6 +22,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   soundEnabled,
   onToggleSound,
   onOpenMusicCorner,
+  onOpenParticleHeart,
 }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showCuratorialModal, setShowCuratorialModal] = useState(false);
@@ -70,6 +72,19 @@ export const Navigation: React.FC<NavigationProps> = ({
 
         {/* Right: Controls & Interactive Talismans */}
         <div className="flex items-center gap-2 md:gap-3 pointer-events-auto">
+          {/* Interactive Particle Heart Experiment Button */}
+          <button
+            onClick={onOpenParticleHeart}
+            className="group relative px-2.5 py-1.5 md:px-3.5 md:py-2 rounded-full border border-cyan-400/50 bg-cyan-950/35 hover:bg-cyan-900/50 text-cyan-200 hover:text-white transition-all duration-300 text-xs flex items-center gap-1.5 backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:border-cyan-300 cursor-pointer"
+            title={language === 'en' ? 'Open Particle Heart Art' : 'تجربة صغيرة (فن الكود)'}
+            aria-label={language === 'en' ? 'Open Particle Heart Experience' : 'فتح تجربة صغيرة'}
+          >
+            <Sparkles size={14} className="text-cyan-400 group-hover:scale-110 group-hover:rotate-12 transition-transform" />
+            <span className="text-[11px] tracking-wider uppercase font-medium">
+              {language === 'en' ? 'Mini Experiment' : 'تجربة صغيرة'}
+            </span>
+          </button>
+
           {/* Sama's Music Corner Button */}
           <button
             onClick={onOpenMusicCorner}

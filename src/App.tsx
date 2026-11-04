@@ -84,12 +84,32 @@ export function App() {
         onTriggerBreeze={handleTriggerBreeze}
         soundEnabled={soundEnabled}
         onToggleSound={handleToggleSound}
-        onOpenMusicCorner={() => setShowMusicCorner(true)}
-        onOpenParticleHeart={() => setShowParticleHeart(true)}
+        onOpenMusicCorner={() => {
+          setShowParticleHeart(false);
+          setShowMusicCorner(true);
+        }}
+        onCloseMusicCorner={() => setShowMusicCorner(false)}
+        isMusicCornerOpen={showMusicCorner}
+        onOpenParticleHeart={() => {
+          setShowMusicCorner(false);
+          setShowParticleHeart(true);
+        }}
+        onCloseParticleHeart={() => setShowParticleHeart(false)}
+        isParticleHeartOpen={showParticleHeart}
+        onSceneChange={(scene) => {
+          setShowMusicCorner(false);
+          setShowParticleHeart(false);
+          setCurrentScene(scene);
+        }}
       />
 
-      {/* Main Experience Stage with Transition Animations */}
-      <main className="relative z-10 w-full min-h-screen flex flex-col items-center justify-start sm:justify-center">
+      {/* Main Experience Stage with Transition Animations (Completely hidden when Music Corner or Particle Heart is open) */}
+      <main
+        aria-hidden={showMusicCorner || showParticleHeart}
+        className={`${
+          showMusicCorner ? 'hidden' : 'relative z-10 w-full min-h-screen flex flex-col items-center justify-start sm:justify-center'
+        }`}
+      >
         {currentScene === 1 && (
           <SceneInvitation
             language={language}
@@ -128,7 +148,7 @@ export function App() {
         )}
       </main>
 
-      {/* Sama's Music Corner Modal (Lazy Loaded, Unmounted when closed) */}
+      {/* Sama's Music Corner Modal (Lazy Loaded, 100% Isolated Full-Screen Surface) */}
       {showMusicCorner && (
         <MusicCorner
           language={language}
@@ -144,12 +164,14 @@ export function App() {
         />
       )}
 
-      {/* Bottom Chapter Progress Bar */}
-      <ChapterBar
-        currentScene={currentScene}
-        onSceneChange={setCurrentScene}
-        language={language}
-      />
+      {/* Bottom Chapter Progress Bar (Hidden when Music Corner or Particle Heart is active) */}
+      {!showMusicCorner && (
+        <ChapterBar
+          currentScene={currentScene}
+          onSceneChange={setCurrentScene}
+          language={language}
+        />
+      )}
     </div>
   );
 }

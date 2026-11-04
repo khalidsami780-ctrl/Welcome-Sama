@@ -234,6 +234,7 @@ html, body {
 .z-30 { z-index: 30; }
 .z-40 { z-index: 40; }
 .z-50 { z-index: 50; }
+.z-60 { z-index: 60; }
 
 .pointer-events-none { pointer-events: none; }
 .pointer-events-auto { pointer-events: auto; }
@@ -529,9 +530,18 @@ html, body {
   .sm\:text-7xl { font-size: 4.5rem; line-height: 1.1; }
   .sm\:left-\[16\%\] { left: 16%; }
   .sm\:right-\[16\%\] { right: 16%; }
+  .sm\:hidden { display: none !important; }
+}
+
+@media (max-width: 767px) {
+  .mobile-only { display: flex !important; }
+  .desktop-only { display: none !important; }
 }
 
 @media (min-width: 768px) {
+  .md\:hidden { display: none !important; }
+  .mobile-only { display: none !important; }
+  .desktop-only { display: flex !important; }
   .md\:inline { display: inline; }
   .md\:flex { display: flex; }
   .md\:col-span-5 { grid-column: span 5 / span 5; }
@@ -546,6 +556,13 @@ html, body {
   .md\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
   .md\:text-8xl { font-size: 6rem; line-height: 1.05; }
 }
+
+/* Explicit Opaque Colors & Touch Targets */
+.bg-obsidian-solid { background-color: #070104 !important; }
+.bg-drawer-solid { background-color: #0d0208 !important; }
+.bg-card-solid { background-color: #14030c !important; }
+.touch-target { min-width: 44px; min-height: 44px; }
+.bg-active-pill { background: linear-gradient(135deg, rgba(164,22,50,0.85), rgba(214,40,69,0.75)); border-color: rgba(244,233,223,0.5) !important; box-shadow: 0 0 16px rgba(214,40,69,0.45); }
 
 /* Animations */
 @keyframes spin {
